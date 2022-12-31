@@ -40,13 +40,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * {@link AbstractBootstrap} is a helper class that makes it easy to bootstrap a {@link Channel}. It support
- * method-chaining to provide an easy way to configure the {@link AbstractBootstrap}.
+ * {@link } is a helper class that makes it easy to bootstrap a {@link Channel}. It support
+ * method-chaining to provide an easy way to configure the {@link }.
  *
  * <p>When not used in a {@link ServerBootstrap} context, the {@link #bind()} methods are useful for connectionless
  * transports such as datagram (UDP).</p>
  */
-public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C extends Channel> implements Cloneable {
+public abstract class <B extends <B, C>, C extends Channel> implements Cloneable {
 
     volatile EventLoopGroup group;
     private volatile ChannelFactory<? extends C> channelFactory;
@@ -55,11 +55,11 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C ext
     private final Map<AttributeKey<?>, Object> attrs = new LinkedHashMap<AttributeKey<?>, Object>();
     private volatile ChannelHandler handler;
 
-    AbstractBootstrap() {
+    () {
         // Disallow extending from a different package.
     }
 
-    AbstractBootstrap(AbstractBootstrap<B, C> bootstrap) {
+    (<B, C> bootstrap) {
         group = bootstrap.group;
         channelFactory = bootstrap.channelFactory;
         handler = bootstrap.handler;
@@ -101,6 +101,7 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C ext
         if (channelClass == null) {
             throw new NullPointerException("channelClass");
         }
+        // 将channelFactory作为BootstrapChannelFactory一个实例
         return channelFactory(new BootstrapChannelFactory<C>(channelClass));
     }
 
@@ -486,6 +487,7 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C ext
             try {
                 return clazz.getConstructor().newInstance();
             } catch (Throwable t) {
+                // 捕获异常包装在ChannelException中
                 throw new ChannelException("Unable to create Channel from class " + clazz, t);
             }
         }

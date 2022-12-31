@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
  * {@link Bootstrap} sub-class which allows easy bootstrap of {@link ServerChannel}
  *
  */
-public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerChannel> {
+public class ServerBootstrap extends <ServerBootstrap, ServerChannel> {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(ServerBootstrap.class);
 
