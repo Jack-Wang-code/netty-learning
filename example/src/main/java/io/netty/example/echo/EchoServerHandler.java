@@ -38,7 +38,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         // Close the connection when an exception is raised.
+        // 打印异常栈跟踪
         cause.printStackTrace();
+        // 关闭该Channel
         ctx.close();
     }
 }

@@ -56,9 +56,12 @@ public final class EchoClient {
         try {
             //创建 Bootstrap
             Bootstrap b = new Bootstrap();
+            //指定 EventLoopGroup 以处理客户端事件；需要适用于 NIO 的实现
             b.group(group)
+                //适用于 NIO 传输的Channel 类型
              .channel(NioSocketChannel.class)
              .option(ChannelOption.TCP_NODELAY, true)
+                //在创建Channel时，向 ChannelPipeline中添加一个 EchoClientHandler实例
              .handler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
@@ -72,6 +75,7 @@ public final class EchoClient {
              });
 
             // Start the client.
+            //连接到远程节点，阻塞等待直到连接完成
             ChannelFuture f = b.connect(HOST, PORT).sync();
 
             // Wait until the connection is closed.

@@ -41,11 +41,13 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
+        //当被通知 Channel是活跃的时候，发送一条消息
         ctx.writeAndFlush(firstMessage);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        //记录已接收消息的转储
         ctx.write(msg);
     }
 
@@ -55,6 +57,7 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
+    //在发生异常时，记录错误并关闭Channel！！
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         // Close the connection when an exception is raised.
         cause.printStackTrace();

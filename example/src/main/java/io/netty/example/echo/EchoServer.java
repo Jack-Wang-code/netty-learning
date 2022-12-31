@@ -52,11 +52,14 @@ public final class EchoServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
+            // 创建ServerBootstrap
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
+                // 指定所使用的 NIO 传输 Channel
              .channel(NioServerSocketChannel.class)
              .option(ChannelOption.SO_BACKLOG, 100)
              .handler(new LoggingHandler(LogLevel.INFO))
+                // 添加一个EchoServerHandler到于Channel的 ChannelPipeline
              .childHandler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
@@ -70,9 +73,11 @@ public final class EchoServer {
              });
 
             // Start the server.
+            // 异步地绑定服务器；调用 sync()方法阻塞等待直到绑定完成
             ChannelFuture f = b.bind(PORT).sync();
 
             // Wait until the server socket is closed.
+            // 获取 Channel 的CloseFuture，并且阻塞当前线程直到它完成
             f.channel().closeFuture().sync();
         } finally {
             // Shut down all event loops to terminate all threads.
