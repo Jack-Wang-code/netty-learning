@@ -308,6 +308,7 @@ public abstract class <B extends <B, C>, C extends Channel> implements Cloneable
     final ChannelFuture initAndRegister() {
         Channel channel = null;
         try {
+            // 进行Channel的实例化
             channel = channelFactory().newChannel();
             init(channel);
         } catch (Throwable t) {
