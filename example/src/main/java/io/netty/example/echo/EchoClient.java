@@ -54,6 +54,7 @@ public final class EchoClient {
         // Configure the client.
         EventLoopGroup group = new NioEventLoopGroup();
         try {
+            //创建 Bootstrap
             Bootstrap b = new Bootstrap();
             b.group(group)
              .channel(NioSocketChannel.class)
